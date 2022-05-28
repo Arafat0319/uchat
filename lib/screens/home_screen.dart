@@ -35,6 +35,7 @@ class HomeScreen extends StatelessWidget {
     // pageIndex.addListener(() {});
     return Scaffold(
       appBar: AppBar(
+        iconTheme: Theme.of(context).iconTheme,
         backgroundColor: Colors.transparent,
         //上一行把状态栏弄成了透明的但初始值里有阴影（类似于状态栏比其他页面高）所以把Z轴设置成0
         elevation: 0,
@@ -44,7 +45,11 @@ class HomeScreen extends StatelessWidget {
           builder: (BuildContext context, String value, _) {
             return Text(
               value,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                // color: AppColors.textDark,
+              ),
             );
           },
         ),
@@ -61,7 +66,7 @@ class HomeScreen extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 24.0),
-            child: Avatar.small(url: Helpers.randonPictureUrl()),
+            child: Avatar.small(url: Helpers.randomPictureUrl()),
           )
         ],
       ),
@@ -100,43 +105,58 @@ class _BottomNavigationBarState extends State<_BottomNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      bottom: true,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        // crossAxisAlignment: CrossAxisAlignment.start,
-
-        children: [
-          _NavigationBarItem(
-            index: 0,
-            lable: 'Messages',
-            icon: CupertinoIcons.bubble_left_bubble_right_fill,
-            isSelected: (selectdIndex == 0),
-            onTap: handleItemSelected,
+    final brightness = Theme.of(context).brightness;
+    return Card(
+      color: (brightness == Brightness.light) ? Colors.transparent : null,
+      elevation: 0,
+      margin: const EdgeInsets.all(4),
+      child: SafeArea(
+        top: false,
+        bottom: true,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 2.0, left: 8, right: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _NavigationBarItem(
+                index: 0,
+                lable: 'Messages',
+                icon: CupertinoIcons.bubble_left_bubble_right_fill,
+                isSelected: (selectdIndex == 0),
+                onTap: handleItemSelected,
+              ),
+              _NavigationBarItem(
+                index: 1,
+                lable: 'Notifications',
+                icon: CupertinoIcons.bell_solid,
+                isSelected: (selectdIndex == 1),
+                onTap: handleItemSelected,
+              ),
+              GlowingActionButton(
+                color: AppColors.secondary,
+                icon: CupertinoIcons.add,
+                onPressed: () {
+                  print('object');
+                },
+              ),
+              _NavigationBarItem(
+                index: 2,
+                lable: 'Calls',
+                icon: CupertinoIcons.phone_fill,
+                isSelected: (selectdIndex == 2),
+                onTap: handleItemSelected,
+              ),
+              _NavigationBarItem(
+                index: 3,
+                lable: 'Contacts',
+                icon: CupertinoIcons.person_2_fill,
+                isSelected: (selectdIndex == 3),
+                onTap: handleItemSelected,
+              ),
+            ],
           ),
-          _NavigationBarItem(
-            index: 1,
-            lable: 'Notifications',
-            icon: CupertinoIcons.bell_solid,
-            isSelected: (selectdIndex == 1),
-            onTap: handleItemSelected,
-          ),
-          _NavigationBarItem(
-            index: 2,
-            lable: 'Calls',
-            icon: CupertinoIcons.phone_fill,
-            isSelected: (selectdIndex == 2),
-            onTap: handleItemSelected,
-          ),
-          _NavigationBarItem(
-            index: 3,
-            lable: 'Contacts',
-            icon: CupertinoIcons.person_2_fill,
-            isSelected: (selectdIndex == 3),
-            onTap: handleItemSelected,
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -165,7 +185,7 @@ class _NavigationBarItem extends StatelessWidget {
         onTap(index);
       },
       child: SizedBox(
-        height: 70,
+        width: 70,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

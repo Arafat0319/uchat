@@ -42,6 +42,8 @@ abstract class AppTheme {
         primaryTextTheme: const TextTheme(
           headline6: TextStyle(color: AppColors.textDark),
         ),
+        // 下面一行我自己加的，为了解决appbar的title颜色问题
+        appBarTheme: const AppBarTheme(foregroundColor: AppColors.textDark),
         iconTheme: const IconThemeData(color: AppColors.iconDark),
         colorScheme: ColorScheme.fromSwatch().copyWith(secondary: accentColor),
       );

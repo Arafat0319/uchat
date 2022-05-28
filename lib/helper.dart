@@ -3,7 +3,7 @@ import 'dart:math';
 abstract class Helpers {
   static final random = Random();
 
-  static String randonPictureUrl() {
+  static String randomPictureUrl() {
     final randomInt = random.nextInt(10000);
     return 'https://picsum.photos/seed/$randomInt/300/300';
   }
